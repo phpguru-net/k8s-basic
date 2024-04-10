@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+  labels:
+    app: mysql-main
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-main
+  template:
+    metadata:
+      labels:
+        app: mysql-main
+    spec:
+      containers:
+      - name: mysql-main
+        image: mysql:8.3.0
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secret
+              key: mysql_root_password
+        resources:
+          requests:
+            memory: "1024Mi"
+            cpu: "1000m"
+          limits:
+            memory: "1024Mi"
+            cpu: "1000m"
