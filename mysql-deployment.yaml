@@ -20,11 +20,11 @@ spec:
         ports:
         - containerPort: 3306
         env:
-        - name: MYSQL_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: secret
-              key: mysql_root_password
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-root-password-secret
+                key: mysql_root_password
         resources:
           requests:
             memory: "1024Mi"
@@ -32,3 +32,15 @@ spec:
           limits:
             memory: "1024Mi"
             cpu: "1000m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+spec:
+  selector:
+    app: mysql-main
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
