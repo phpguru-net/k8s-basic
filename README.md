@@ -58,3 +58,14 @@ env:
         name: mysql-root-password-secret
         key: mysql_root_password
 ```
+
+### MYSQL and PHPMYAdmin
+
+```sh
+kubectl apply -f mysql-secret.yaml
+kubectl get secret mysql-root-password-secret
+kubectl apply -f mysql-deployment.yaml
+kubectl apply -f mysql-configmap.yaml
+kubectl apply -f phpmyadmin-deployment.yaml
+minikube service phpmyadmin-service
+```
