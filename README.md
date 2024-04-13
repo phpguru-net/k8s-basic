@@ -69,3 +69,60 @@ kubectl apply -f mysql-configmap.yaml
 kubectl apply -f phpmyadmin-deployment.yaml
 minikube service phpmyadmin-service
 ```
+
+### Cluster Info
+
+```sh
+kubectl cluster-info
+```
+
+### Namespace
+
+```sh
+kubectl create namespace my-namespace
+kubectl get configmap -n=default
+kubectl get configmap -n=my-namespace
+kubectl apply -f mysql-configmap.yaml -n=my-namespace
+kubectl get configmap -n=my-namespace
+kubectl get all -n=my-namespace
+kubectl delete -f mysql-configmap.yaml -n=my-namespace
+kubectl delete namespace my-namespace
+```
+
+### Ingress
+
+```sh
+minikube addons enable ingress
+minikube addons enable ingress-dns
+kubectl get pods -n ingress-nginx
+```
+
+Dashboard
+
+```sh
+minikube addons list | grep dashboard
+# | dashboard                   | minikube | disabled     | Kubernetes                     |
+minikube addons enable dashboard
+kubectl get ns
+kubectl get all -n kubernetes-dashboard
+kubectl apply -f dashboard-ingress.yaml
+kubectl get ingress -n kubernetes-dashboard --watch
+# then use the ipaddress, assign it with your dns to resolve the domain
+# in local we'll modify /etc/hosts
+sudo nano /etc/hosts
+# then tunnel to keep accessible
+minikube tunnel
+```
+
+```sh
+## k8s tutorial: because of using Docker Driver -> we must use this local ip address
+127.0.0.1 dashboard.k8s-phpguru.local
+```
+
+### Quick test ingress and ingress-dns addons
+
+```sh
+kubectl create deployment web --image=gcr.io/google-samples/hello-app:1.0
+kubectl expose deployment web --port=8080
+kubectl apply -f example-ingress.yaml
+```
