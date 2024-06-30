@@ -126,3 +126,7 @@ kubectl create deployment web --image=gcr.io/google-samples/hello-app:1.0
 kubectl expose deployment web --port=8080
 kubectl apply -f example-ingress.yaml
 ```
+
+## References
+
+- [Ingress DNS](https://minikube.sigs.k8s.io/docs/handbook/addons/ingress-dns/#macOS)
